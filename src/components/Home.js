@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function Home(props) {
     const displayPokemans = props.pokemans.map(p => {
-        return <h3 key={p.name} onClick={() => props.setPokeInfo(p.url)}><Link to='/pokemon'>{p.name}</Link></h3>
+        let upper = p.name.charAt(0).toUpperCase() + p.name.slice(1)
+
+        return <h3 key={p.name} onClick={() => props.setPokeInfo(p.url)}><Link to='/pokemon' className="links">{upper}</Link></h3>
       })
     return (
         <div className="home">

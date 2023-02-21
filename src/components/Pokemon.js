@@ -28,7 +28,7 @@ export default function Pokemon(props) {
                     return t.type.name
                 })
                 setPokeData({
-                    title: data.name,
+                    title: data.name.toUpperCase(),
                     imgUrl: data.sprites.front_default,
                     hp: data.stats[0].base_stat,
                     xp: data.base_experience,
@@ -36,37 +36,30 @@ export default function Pokemon(props) {
                     weight: data.weight,
                     attack: data.stats[1].base_stat,
                     speed: data.stats[5].base_stat,
-                    abilities: theAbilities,
-                    types: theTypes
+                    abilities: theAbilities.join(', '),
+                    types: theTypes.join(', ')
                 })
             });
     }, [getUrl])
     console.log(pokeData)
-
-    /* let responseClone;
-    React.useEffect(() => {
-        fetch(getUrl)
-            .then(response => {
-                responseClone = response.clone()
-                return response.json()
-            })
-            
-            .then(data => {
-                console.log(data)
-            }, function(rejectionReason) {
-                console.log('Error parsing JSON from response:', rejectionReason, responseClone);
-                responseClone.text()
-                .then(function (bodyText) {
-                    console.log('Received the following instead of valid JSON:', bodyText); // 6
-                });
-            });
-    }, [getUrl])*/
     
     return (
         <div className="pokemon">
             <button className="homebtn"><Link to='/' className="homebtn">Home</Link></button>
-            <h3>{props.pokeInfo}</h3>
-            <img src={pokeData.imgUrl} alt='Pokemon' />
+
+            <div className="card">
+                <h2>{pokeData.title}</h2>
+                <h4 className="xp">XP: {pokeData.xp}</h4>
+                <img src={pokeData.imgUrl} alt='Pokemon' className="pokeImg" />
+                <h3>Abilities: {pokeData.abilities}</h3>
+                <h3>Types: {pokeData.types}</h3>
+                <h3>Stats</h3><hr></hr>
+                <h4>Height: {pokeData.height}</h4>
+                <h4>Weight: {pokeData.weight}</h4>
+                <h4>HP: {pokeData.hp}</h4>
+                <h4>Attack: {pokeData.attack}</h4>
+                <h4>Speed: {pokeData.speed}</h4>
+            </div>   
         </div>
     )
 }
