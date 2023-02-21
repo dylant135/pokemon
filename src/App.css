@@ -6,6 +6,7 @@
 
 h1, h3 {
   text-align: center;
+  padding: 3px 0;
 }
 
 .changePage {
@@ -26,4 +27,30 @@ h1, h3 {
 .pagebtn:hover {
   background-color: #e25972;
   cursor: pointer;
+}
+
+.home {
+  padding-bottom: 20px;
+}
+
+.pokemon {
+  width: 100vw;
+  margin: auto;
+  text-align: center;
+}
+
+.homebtn {
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 5px;
+  margin: 7px 0;
+  background-color: crimson;
+}
+
+.homebtn:hover {
+  cursor: pointer;
+  background-color: #e25972;
 }

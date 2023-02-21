@@ -1,12 +1,15 @@
 import React from 'react';
 import './App.css';
-import ChangePage from './ChangePage';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import Pokemon from './components/Pokemon';
 
 function App() {
   const [pokemans, setPokemans] = React.useState([])
   const [currentUrl, setCurrentUrl] = React.useState('https://pokeapi.co/api/v2/pokemon')
   const [nextUrl, setNextUrl] = React.useState()
   const [prevUrl, setPrevUrl] = React.useState()
+  const [pokeInfo, setPokeInfo] = React.useState()
 
   React.useEffect(() => {
     fetch(currentUrl)
@@ -17,10 +20,6 @@ function App() {
         setPrevUrl(data.previous)
       });
   }, [currentUrl])
-
-  const displayPokemans = pokemans.map(p => {
-    return <h3 key={p.name}>{p.name}</h3>
-  })
 
   function toNextPage() {
     if(nextUrl === null) {
@@ -37,13 +36,16 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>Pokemon</h1>
-      <ChangePage
-        toNextPage={toNextPage}
-        toPrevPage={toPrevPage}
-      />
-      {displayPokemans}
+    <div className="App">  
+      <Routes>
+        <Route exact path='/' element={<Home
+          pokemans={pokemans}
+          toNextPage={toNextPage}
+          toPrevPage={toPrevPage}
+          setPokeInfo={setPokeInfo}
+        />} />
+        <Route path='/pokemon' element={<Pokemon pokeInfo={pokeInfo} />} />
+      </Routes>
     </div>
   );
 }
