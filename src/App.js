@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import ChangePage from './ChangePage';
 
 function App() {
+  const [pokemans, setPokemans] = React.useState([])
+  const [currentUrl, setCurrentUrl] = React.useState('https://pokeapi.co/api/v2/pokemon')
+  const [nextUrl, setNextUrl] = React.useState()
+  const [prevUrl, setPrevUrl] = React.useState()
+
+  React.useEffect(() => {
+    fetch(currentUrl)
+      .then(response => response.json())
+      .then(data => {
+        setPokemans(data.results)
+        setNextUrl(data.next)
+        setPrevUrl(data.previous)
+      });
+  }, [currentUrl])
+
+  const displayPokemans = pokemans.map(p => {
+    return <h3 key={p.name}>{p.name}</h3>
+  })
+
+  function toNextPage() {
+    if(nextUrl === null) {
+      return
+    }
+    setCurrentUrl(nextUrl)
+  }
+
+  function toPrevPage() {
+    if(prevUrl === null) {
+      return
+    }
+    setCurrentUrl(prevUrl)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Pokemon</h1>
+      <ChangePage
+        toNextPage={toNextPage}
+        toPrevPage={toPrevPage}
+      />
+      {displayPokemans}
     </div>
   );
 }
